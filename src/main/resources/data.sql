@@ -1,0 +1,1 @@
+insert into MATERIA (codigo, nombre)values('12345','sistemas');
