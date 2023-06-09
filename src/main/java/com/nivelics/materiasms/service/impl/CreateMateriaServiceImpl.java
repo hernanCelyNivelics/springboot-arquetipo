@@ -4,6 +4,7 @@ import com.nivelics.materiasms.converter.MateriaConverter;
 import com.nivelics.materiasms.dto.MateriaDto;
 import com.nivelics.materiasms.dto.MateriaResponseDto;
 import com.nivelics.materiasms.entity.Materia;
+import com.nivelics.materiasms.exceptions.MateriaNotFoundException;
 import com.nivelics.materiasms.repository.MateriaRepository;
 import com.nivelics.materiasms.service.CreateMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class CreateMateriaServiceImpl implements CreateMateriaService {
 
     @Override
     public MateriaDto update(String id, MateriaDto materiaDto) {
-        Materia materia = materiaRepository.findById(Integer.parseInt(id)).orElse(null);
-        if (materia == null) return null;
+        Materia materia = materiaRepository.findById(Integer.parseInt(id)).orElseThrow(null);
+        if (materia == null) throw new MateriaNotFoundException();
         materia.setCodigo(materiaDto.getCodigo());
         materia.setNombre(materiaDto.getNombre());
         return materiaConverter.entityToDto(materiaRepository.save(materia));
