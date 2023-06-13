@@ -34,7 +34,7 @@ public class CreateMateriaServiceImpl implements CreateMateriaService {
 
     @Override
     public MateriaDto update(String id, MateriaDto materiaDto) {
-        Materia materia = materiaRepository.findById(Integer.parseInt(id)).orElseThrow(null);
+        Materia materia = materiaRepository.findById(Integer.parseInt(id)).orElseThrow(()-> new MateriaNotFoundException());
         if (materia == null) throw new MateriaNotFoundException();
         materia.setCodigo(materiaDto.getCodigo());
         materia.setNombre(materiaDto.getNombre());
